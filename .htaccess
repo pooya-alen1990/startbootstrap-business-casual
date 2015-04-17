@@ -1,0 +1,7 @@
+RewriteEngine On
+ 
+RewriteRule ^([^/]*)/$ index.php?page=$1
+
+# RewriteRule ^([^/]*)$ index.php?page=$1
+
+ErrorDocument 404 /404.html

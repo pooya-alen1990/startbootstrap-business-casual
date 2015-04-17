@@ -1,0 +1,19 @@
+@media screen and (min-width:768px) {
+.navbar-nav {
+        
+        font-size: 14px !important;
+    }
+.nav>li>a {
+        padding: 20px !important;
+    }
+}
+
+@media print{
+	
+	.print-only{
+		visibility:visible !important;
+		}
+	.not-print{
+	visibility:hidden;
+	}
+}
