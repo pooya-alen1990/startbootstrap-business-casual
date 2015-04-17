@@ -32,6 +32,7 @@ $connection = mysqli_connect(HOST_NAME,USER_NAME,PASSWORD,DB_NAME) or die('Conne
 mysqli_set_charset($connection,'utf-8');
 
 
+define('KEY', 'ADHBBIihigi!@#$$%^&*()_+');
 
 
 ###############

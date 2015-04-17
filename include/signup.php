@@ -1,5 +1,30 @@
 <?php
+	$error = '';
 	if(isset($_POST['register'])){
+		
+		$firstname = $_POST['firstname'];
+		$lastname = $_POST['lastname'];
+		$password = $_POST['password'];
+		$repassword = $_POST['repassword'];
+		$mail = $_POST['mail'];
+		$register_date = time();
+		
+		if($password === $repassword){
+			
+			$password = sha1($password.KEY);
+			
+			$insert_query = "INSERT INTO `users`(`id`, `firstname`, `lastname`, `mail`, `password`, `register_date`) VALUES ('','$firstname','$lastname','$password','$mail','$register_date')";
+			$result = mysqli_query($connection,$insert_query);
+			if($result){
+				$error = SIGNUP_SUCCESSFULLY;
+				}else{
+					$error = SIGNUP_FAILED;
+					}
+
+			
+			}else{
+				$error = REPASSWORD_FAILED;
+				}
 		
 		}
 ?>
@@ -14,7 +39,7 @@
                 </div>
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
-                    
+                    <?php echo $error; ?>
                     <form class="form-horizontal" method="post">
                     
                     <div class="form-group">
