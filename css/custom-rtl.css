@@ -1,0 +1,36 @@
+@media screen and (min-width:768px) {
+.navbar-nav {
+        
+        font-size: 14px !important;
+    }
+.nav>li>a {
+        padding: 20px !important;
+    }
+}
+
+@media print{
+	
+	.print-only{
+		visibility:visible !important;
+		}
+	.not-print{
+	visibility:hidden;
+	}
+}
+@font-face{
+	font-family:'koodak';
+	src:url('../fonts/BKoodakBold.eot');
+	src:url('../fonts/BKoodakBold.eot#iefix') format('eot'),url('../fonts/BKoodakBold.woff') format('woff'),url('../fonts/BKoodakBold.ttf') format('truetype');
+	font-weight:normal;
+	font-style:normal;
+}
+body{
+	font-family:koodak;
+	direction:rtl;
+	}
+.navbar-nav {
+    letter-spacing: 0 !important;
+}
+.navbar-nav > li {
+    float: right;
+}

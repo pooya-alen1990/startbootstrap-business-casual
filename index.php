@@ -1,4 +1,19 @@
-<?php require 'core/core.php'; ?>
+<?php
+	session_start();
+	if(isset($_POST['en'])){
+		$_SESSION['lang'] = 'en';
+		
+		}elseif(isset($_POST['fa'])){
+			
+		$_SESSION['lang'] = 'fa';	
+		}
+	if(!isset($_SESSION['lang'])){
+		$_SESSION['lang'] = 'en';		
+	}
+?>
+<?php require 'core/core.php'; 
+include "/messages/msg.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +25,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Business Casual - Start Bootstrap Theme</title>
+    <title>E-shop</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="<?php echo $prefix; ?>/css/bootstrap.min.css" rel="stylesheet">
@@ -20,7 +35,21 @@
     
     <link href="<?php echo $prefix; ?>/css/font-awesome.min.css" rel="stylesheet">
     
-    <link href="<?php echo $prefix; ?>/css/custom.css" rel="stylesheet">
+   
+    <?php
+	if($_SESSION['lang'] == 'fa'){
+    	echo '<link href="'.$prefix.'/css/custom-rtl.css" rel="stylesheet">';
+	}else{
+		echo '<link href="'.$prefix.'/css/custom.css" rel="stylesheet">';
+		}
+    ?>
+    <!-- jQuery -->
+    <script src="<?php echo $prefix; ?>/js/jquery.js"></script>
+    <script src="<?php echo $prefix; ?>/js/jqBootstrapValidation.js"></script>
+    <script>
+    $(function () { $("input").not("[type=submit]").jqBootstrapValidation({preventSubmit: true}); } );
+    </script>
+    
 
     <!-- Fonts -->
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
@@ -36,10 +65,16 @@
 </head>
 
 <body>
-
     <div class="brand">Business Casual</div>
     <div class="address-bar">3481 Melrose Place | Beverly Hills, CA 90210 | 123.456.7890</div>
-
+	
+    <form method="post" style="margin:10px;">
+        <div class="btn-group" role="group">
+          <input type="submit" class="btn btn-default" name="en" value="English">
+          <input type="submit" class="btn btn-default" name="fa" value="فارسی">
+        </div>
+    </form>
+    
     <!-- Navigation -->
     <nav class="navbar navbar-default" role="navigation">
         <div class="container">
@@ -58,10 +93,10 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="<?php echo $prefix; ?>/"><span class="fa fa-home"></span> Home</a>
+                        <a href="<?php echo $prefix; ?>/"><span class="fa fa-home"></span> <?php echo $lang['Home']; ?></a>
                     </li>
                     <li>
-                        <a href="<?php echo $prefix; ?>/about/"><span class="fa fa-home"></span> About</a>
+                        <a href="<?php echo $prefix; ?>/about/"><span class="fa fa-home"></span> <?php echo $lang['About']; ?></a>
                     </li>
                     <li>
                         <a href="<?php echo $prefix; ?>/blog/"><span class="fa fa-home"></span> Blog</a>
@@ -69,15 +104,26 @@
                     <li>
                         <a href="<?php echo $prefix; ?>/contact/"><span class="fa fa-home"></span> Contact</a>
                     </li>
-                    <li>
-                        <a href="<?php echo $prefix; ?>/login/"><span class="fa fa-sign-in"></span> Login</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo $prefix; ?>/signup/"><span class="fa fa-user-plus"></span> Sign up</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo $prefix; ?>/logout.php"><span class="fa fa-sign-out"></span> Logout</a>
-                    </li>
+                    <?php
+					if(!isset($_SESSION['MM_ID'])){
+						echo '
+							<li>
+								<a href="'.$prefix.'/login/"><span class="fa fa-sign-in"></span> Login</a>
+							</li>
+							<li>
+								<a href="'.$prefix.'/signup/"><span class="fa fa-user-plus"></span> Sign up</a>
+							</li>';
+					}else{
+						echo '
+							<li>
+								<a href="'.$prefix.'/logout.php"><span class="fa fa-sign-out"></span> Logout</a>
+							</li>
+							<li>
+								<a href="'.$prefix.'/mypage/"><span class="fa fa-user"></span> My Page</a>
+							</li>';
+					
+					}
+                    ?>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -103,14 +149,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <p>Copyright &copy; Your Website 2014</p>
+                    <p><?php echo $lang['copyright']; ?></p>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- jQuery -->
-    <script src="<?php echo $prefix; ?>/js/jquery.js"></script>
+    
 
     <!-- Bootstrap Core JavaScript -->
     <script src="<?php echo $prefix; ?>/js/bootstrap.min.js"></script>
@@ -120,6 +165,10 @@
     $('.carousel').carousel({
         interval: 5000 //changes the speed
     })
+	
+
+  	
+
     </script>
 
 </body>

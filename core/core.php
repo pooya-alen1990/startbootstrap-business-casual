@@ -1,6 +1,8 @@
 <?php
-session_start();
 
+if(isset($_SESSION['lang'])){
+	include "lang/$_SESSION[lang].php";
+	}
 
 if($_SERVER['HTTP_HOST'] == 'localhost' || $_SERVER['HTTP_HOST'] == '127.0.0.1' || $_SERVER['HTTP_HOST'] == '::1'){
 	define('LOCAL_MODE', 1);
@@ -36,5 +38,5 @@ define('KEY', 'ADHBBIihigi!@#$$%^&*()_+');
 
 
 ###############
-include('messages/msg.php');
+
 //include('jdf.php');

@@ -1,33 +1,3 @@
-<?php
-	$error = '';
-	if(isset($_POST['register'])){
-		
-		$firstname = $_POST['firstname'];
-		$lastname = $_POST['lastname'];
-		$password = $_POST['password'];
-		$repassword = $_POST['repassword'];
-		$mail = $_POST['mail'];
-		$register_date = time();
-		
-		if($password === $repassword){
-			
-			$password = sha1($password.KEY);
-			
-			$insert_query = "INSERT INTO `users`(`id`, `firstname`, `lastname`, `mail`, `password`, `register_date`) VALUES ('','$firstname','$lastname','$password','$mail','$register_date')";
-			$result = mysqli_query($connection,$insert_query);
-			if($result){
-				$error = SIGNUP_SUCCESSFULLY;
-				}else{
-					$error = SIGNUP_FAILED;
-					}
-
-			
-			}else{
-				$error = REPASSWORD_FAILED;
-				}
-		
-		}
-?>
     <div class="container">
 
         <div class="row">
@@ -39,8 +9,8 @@
                 </div>
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
-                    <?php echo $error; ?>
-                    <form class="form-horizontal" method="post">
+                <span class="result"></span>
+                    <form class="form-horizontal" method="post" id="myForm">
                     
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">F-name</label>
@@ -64,17 +34,21 @@
                         </div>
                       </div>
                       
-                      <div class="form-group">
-                        <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-                        <div class="col-sm-10">
-                          <input type="password" name="password" class="form-control" placeholder="Password">
+                     
+                      <div class="control-group">
+                        <label class="control-label col-sm-2">Password </label>
+                        <div class="controls col-sm-10 ">
+                          <input type="password" name="password" required id="password" class="form-control"  >
+                          <p class="help-block"></p>
                         </div>
                       </div>
                       
-                      <div class="form-group">
-                        <label for="inputPassword3" class="col-sm-2 control-label">Re-Password</label>
-                        <div class="col-sm-10">
-                          <input type="password" name="repassword" class="form-control" placeholder="Re-Password">
+                      <div class="control-group">
+                        <label class="control-label col-sm-2">Re-Password </label>
+                        <div class="controls col-sm-10 ">
+                          <input type="password" name="repassword" required data-validation-matches-match="password" data-validation-matches-message=
+    "Must match password entered above" class="form-control" >
+                          <p class="help-block"></p>
                         </div>
                       </div>
                       
@@ -89,14 +63,11 @@
                       </div>
                       <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                          <button type="submit" class="btn btn-default" name="register">Sign in</button>
+                          <button type="submit" class="btn btn-default" name="register2" id="register">Signup</button>
                         </div>
                       </div>
                     </form>
-                    
-                    
-                    
-                    
+   
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
@@ -107,7 +78,7 @@
             <div class="box">
                 <div class="col-lg-12">
                     <hr>
-                    	<h2 class="intro-text text-center">Login
+                    	<h2 class="intro-text text-center">Signup
                     </h2>
                     <hr>
                 </div>
@@ -118,3 +89,18 @@
 
     </div>
     <!-- /.container -->
+<script>
+	
+$(document).ready(function() {
+    $("#register").click(function(e) {
+		e.preventDefault();
+
+        $.post( "<?php echo $prefix; ?>/include/ajax/signup_proccess.php",
+				$('#myForm').serialize()
+				, function( data ) {
+		  $( ".result" ).html( data );
+		});
+    });
+	
+});
+</script>
